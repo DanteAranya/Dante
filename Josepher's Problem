@@ -1,0 +1,117 @@
+/*main body*/
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct node
+{
+	int info;
+	struct node *next;
+
+}N;
+
+N *start=NULL,*ptr;
+N *tail=NULL;
+
+#include "createCL.h"
+#include "DeleteCL.h"
+#include "displayCL.h"
+
+void main()
+{
+	int c,x;int i=0;N *s;
+
+	printf("Create the linked list\n");
+	x=createCL();
+	printf("List Created\n");
+	displayCL(start);
+	s=start;
+    printf("\nEnter the gap\n");
+    scanf("%d",&c);
+
+	while(x>1)
+    {
+        s=DeleteCL(s,c);
+        displayCL(s);
+        x=x-1;
+
+    }
+
+    printf("The survivor is %d",s->info);
+
+}
+
+
+
+
+
+
+/*createdl1.h*/
+int createCL()
+{
+    int c;int i=0;
+    do
+    {
+        ptr=(N*)malloc(sizeof(N));
+        printf("Enter the value\n");
+        scanf("%d",&ptr->info);
+        i=i+1;
+        if(start==NULL)
+        {
+            start=tail=ptr;
+        }
+        else
+        {
+            tail->next=ptr;
+            tail=ptr;
+        }
+        printf("Enter 1 to add 0 to exit");
+        scanf("%d",&c);
+    }
+    while(c!=0);
+    tail->next=start;
+    printf("\nThe size is %d\n",i);
+    return i;
+}
+
+
+
+
+
+
+
+/*Delete.h*/
+N* DeleteCL(N *s,int n)
+{
+    N *temp;int i=0;
+    temp=s;
+
+
+    for(i=0;i<n-2;i++)
+    {
+        temp=temp->next;
+    }
+    printf("Killed element is %d\n",(temp->next)->info);
+    temp->next=(temp->next)->next;
+    s=temp->next;
+    return s;
+}
+
+
+
+
+
+
+/*displaydl.h*/
+void displayCL(N *s)
+{
+	N *temp;
+	printf("\nThe list is  ");
+    temp=s;
+	do
+	{
+		printf("%d ",temp->info);
+		temp=temp->next;
+	}
+	while(temp!=s);
+}
+
